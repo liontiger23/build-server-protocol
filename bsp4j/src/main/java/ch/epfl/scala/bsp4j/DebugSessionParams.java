@@ -18,6 +18,8 @@ public class DebugSessionParams {
   @JsonAdapter(JsonElementTypeAdapter.Factory.class)
   private Object data;
 
+  private String workingDirectory;
+
   public DebugSessionParams(@NonNull final List<BuildTargetIdentifier> targets) {
     this.targets = targets;
   }
@@ -50,6 +52,15 @@ public class DebugSessionParams {
     this.data = data;
   }
 
+  @Pure
+  public String getWorkingDirectory() {
+    return this.workingDirectory;
+  }
+
+  public void setWorkingDirectory(final String workingDirectory) {
+    this.workingDirectory = workingDirectory;
+  }
+
   @Override
   @Pure
   public String toString() {
@@ -57,6 +68,7 @@ public class DebugSessionParams {
     b.add("targets", this.targets);
     b.add("dataKind", this.dataKind);
     b.add("data", this.data);
+    b.add("workingDirectory", this.workingDirectory);
     return b.toString();
   }
 
@@ -85,6 +97,11 @@ public class DebugSessionParams {
         return false;
     } else if (!this.data.equals(other.data))
       return false;
+    if (this.workingDirectory == null) {
+      if (other.workingDirectory != null)
+        return false;
+    } else if (!this.workingDirectory.equals(other.workingDirectory))
+      return false;
     return true;
   }
 
@@ -95,6 +112,7 @@ public class DebugSessionParams {
     int result = 1;
     result = prime * result + ((this.targets== null) ? 0 : this.targets.hashCode());
     result = prime * result + ((this.dataKind== null) ? 0 : this.dataKind.hashCode());
-    return prime * result + ((this.data== null) ? 0 : this.data.hashCode());
+    result = prime * result + ((this.data== null) ? 0 : this.data.hashCode());
+    return prime * result + ((this.workingDirectory== null) ? 0 : this.workingDirectory.hashCode());
   }
 }
